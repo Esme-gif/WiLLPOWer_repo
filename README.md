@@ -2,7 +2,7 @@
 
 Inprogress game project
 
-Using Unity version 2021.3.
+Using Unity version 2021.3.5f1
 
 WiLLPOWer Plans:
 
