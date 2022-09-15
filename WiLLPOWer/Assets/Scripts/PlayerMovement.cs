@@ -8,30 +8,75 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float movement;
 
+    private float waitTime;
+    private bool canJump;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        waitTime = 1.25f;
+        canJump = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("up"))
+        if (canJump)
         {
-            rb.velocity = new Vector3(0,movement,movement);
+            if (Input.GetKeyDown("up"))
+            {
+                //rb.velocity = new Vector3(0,movement,movement);
+                StartCoroutine(UpMovement());
+            }
+            if (Input.GetKeyDown("right"))
+            {
+                //rb.velocity = new Vector3(movement,movement,0);
+                StartCoroutine(RightMovement());
+            }
+            if (Input.GetKeyDown("down"))
+            {
+                //rb.velocity = new Vector3(0,movement,-movement);
+                StartCoroutine(DownMovement());
+            }
+            if (Input.GetKeyDown("left"))
+            {
+                //rb.velocity = new Vector3(-movement,movement,0);
+                StartCoroutine(LeftMovement());
+            }
         }
-        if (Input.GetKeyDown("right"))
-        {
-            rb.velocity = new Vector3(movement,movement,0);
-        }
-        if (Input.GetKeyDown("down"))
-        {
-            rb.velocity = new Vector3(0,movement,-movement);
-        }
-        if (Input.GetKeyDown("left"))
-        {
-            rb.velocity = new Vector3(-movement,movement,0);
-        }
+    }
+
+    IEnumerator UpMovement()
+    {
+        rb.velocity = new Vector3(0,movement,movement);
+        canJump = false;
+        yield return new WaitForSeconds(waitTime);
+        canJump = true;
+
+    }
+
+    IEnumerator RightMovement()
+    {
+        rb.velocity = new Vector3(movement,movement,0);
+        canJump = false;
+        yield return new WaitForSeconds(waitTime);
+        canJump = true;
+    }
+
+    IEnumerator DownMovement()
+    {
+        rb.velocity = new Vector3(0,movement,-movement);
+        canJump = false;
+        yield return new WaitForSeconds(waitTime);
+        canJump = true;
+    }
+
+    IEnumerator LeftMovement()
+    {
+        rb.velocity = new Vector3(-movement,movement,0);
+        canJump = false;
+        yield return new WaitForSeconds(waitTime);
+        canJump = true;
     }
 }
