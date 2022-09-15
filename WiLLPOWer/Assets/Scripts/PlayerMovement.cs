@@ -79,4 +79,9 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         canJump = true;
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        transform.position = new Vector3(collision.gameObject.transform.position.x, transform.position.y,collision.gameObject.transform.position.z);
+    }
 }
