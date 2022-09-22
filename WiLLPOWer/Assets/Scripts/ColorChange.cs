@@ -9,8 +9,15 @@ public class ColorChange : MonoBehaviour
     [SerializeField] private Material _TriggerColor; // might make its own script
     [SerializeField] private Material _PositionColor;
 
-    [Header("Is Trap?")]
+    private GameManager gameManager;
+    private PlayerMovement playerRef;
+
+    private float coolTime;
+
+    [Header("Is Something?")]
     public bool isTrap;
+    public bool isStart;
+    public bool isEnd;
     
 
     Renderer rend;
@@ -19,6 +26,16 @@ public class ColorChange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.Find("GameManager"))
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+        if (GameObject.Find("player"))
+        {
+            playerRef = GameObject.Find("player").GetComponent<PlayerMovement>();
+        }
+
+        coolTime = 0.25f;
         rend = this.GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = _OGColor;
@@ -38,8 +55,7 @@ public class ColorChange : MonoBehaviour
             if (isTrap)
             {
                 rend.sharedMaterial = _TriggerColor;
-                // move player to starting point
-                //collision.gameObject.transform.position = new Vector3(5,2,0);
+                StartCoroutine(RePosition(collision.gameObject));
             }
             else
             {
@@ -56,6 +72,21 @@ public class ColorChange : MonoBehaviour
         {
             rend.sharedMaterial = _OGColor;
         }
+    }
+
+    IEnumerator RePosition(GameObject playerObject)
+    {
+        //disable and then enable player movement after some time
+        playerRef.DisableMovement();
+        yield return new WaitForSeconds(coolTime);
+        if (gameManager.startPosition != null)
+        {
+            playerObject.transform.position = gameManager.startPosition.transform.position;
+        }
+        playerRef.EnableMovement();
+        // move player to starting point
+        //collision.gameObject.transform.position = new Vector3(5,2,0);
+
     }
 
 

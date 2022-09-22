@@ -50,38 +50,48 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator UpMovement()
     {
         rb.velocity = new Vector3(0,movement,movement);
-        canJump = false;
+        DisableMovement();
         yield return new WaitForSeconds(waitTime);
-        canJump = true;
+        EnableMovement();
 
     }
 
     IEnumerator RightMovement()
     {
         rb.velocity = new Vector3(movement,movement,0);
-        canJump = false;
+        DisableMovement();
         yield return new WaitForSeconds(waitTime);
-        canJump = true;
+        EnableMovement();
     }
 
     IEnumerator DownMovement()
     {
         rb.velocity = new Vector3(0,movement,-movement);
-        canJump = false;
+        DisableMovement();
         yield return new WaitForSeconds(waitTime);
-        canJump = true;
+        EnableMovement();
     }
 
     IEnumerator LeftMovement()
     {
         rb.velocity = new Vector3(-movement,movement,0);
-        canJump = false;
+        DisableMovement();
         yield return new WaitForSeconds(waitTime);
-        canJump = true;
+        EnableMovement();
     }
 
     void OnCollisionEnter(Collision collision)
     {
         transform.position = new Vector3(collision.gameObject.transform.position.x, transform.position.y,collision.gameObject.transform.position.z);
+    }
+
+    public void DisableMovement()
+    {
+        canJump = false;
+    }
+
+    public void EnableMovement()
+    {
+        canJump = true;
     }
 }
