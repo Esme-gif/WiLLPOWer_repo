@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         waitTime = 1f;
         positionCool = 0.25f;
-        outOfBound = -10;
+        outOfBound = -7;
         canJump = true;
 
         if (GameObject.Find("GameManager"))
