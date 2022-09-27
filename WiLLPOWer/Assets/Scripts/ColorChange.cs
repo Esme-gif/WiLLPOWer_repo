@@ -12,7 +12,7 @@ public class ColorChange : MonoBehaviour
     private GameManager gameManager;
     private PlayerMovement playerRef;
 
-    private float coolTime;
+    //private float coolTime;
 
     [Header("Is Something?")]
     public bool isTrap;
@@ -35,7 +35,7 @@ public class ColorChange : MonoBehaviour
             playerRef = GameObject.Find("player").GetComponent<PlayerMovement>();
         }
 
-        coolTime = 0.25f;
+        //coolTime = 0.25f;
         rend = this.GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = _OGColor;
@@ -55,7 +55,8 @@ public class ColorChange : MonoBehaviour
             if (isTrap)
             {
                 rend.sharedMaterial = _TriggerColor;
-                StartCoroutine(RePosition(collision.gameObject));
+                //StartCoroutine(RePosition(collision.gameObject));
+                playerRef.RePosition();
             }
             else
             {
@@ -73,7 +74,7 @@ public class ColorChange : MonoBehaviour
             rend.sharedMaterial = _OGColor;
         }
     }
-
+/*
     IEnumerator RePosition(GameObject playerObject)
     {
         //disable and then enable player movement after some time
@@ -88,6 +89,7 @@ public class ColorChange : MonoBehaviour
         //collision.gameObject.transform.position = new Vector3(5,2,0);
 
     }
+    */
 
 
 }

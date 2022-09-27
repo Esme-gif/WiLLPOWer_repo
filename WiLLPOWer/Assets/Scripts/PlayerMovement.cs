@@ -8,15 +8,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float movement;
 
+    private GameManager gameManager;
+
     private float waitTime;
+    private float positionCool;
+    private int outOfBound;
     private bool canJump;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        waitTime = 1.25f;
+        waitTime = 1f;
+        positionCool = 0.25f;
+        outOfBound = -10;
         canJump = true;
+
+        if (GameObject.Find("GameManager"))
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
     }
 
     // Update is called once per frame
@@ -44,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
                 //rb.velocity = new Vector3(-movement,movement,0);
                 StartCoroutine(LeftMovement());
             }
+        }
+        if (transform.position.y <= outOfBound)
+        {
+            RePosition();
         }
     }
 
@@ -93,5 +108,23 @@ public class PlayerMovement : MonoBehaviour
     public void EnableMovement()
     {
         canJump = true;
+    }
+
+    public void RePosition()
+    {
+        StartCoroutine(MovePlayer());
+    }
+
+    IEnumerator MovePlayer()
+    {
+        //disable and then enable player movement after putting player in start position
+        DisableMovement();
+        yield return new WaitForSeconds(positionCool);
+        if (gameManager.startPosition != null)
+        {
+            transform.position = gameManager.startPosition.transform.position;
+        }
+        EnableMovement();
+        
     }
 }
