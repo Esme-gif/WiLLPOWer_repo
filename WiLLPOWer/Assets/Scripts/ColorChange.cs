@@ -10,7 +10,6 @@ public class ColorChange : MonoBehaviour
     [SerializeField] private Material _PositionColor;
 
     private GameManager gameManager;
-    private PlayerMovement playerRef;
 
     //private float coolTime;
 
@@ -30,10 +29,7 @@ public class ColorChange : MonoBehaviour
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
-        if (GameObject.Find("player"))
-        {
-            playerRef = GameObject.Find("player").GetComponent<PlayerMovement>();
-        }
+        
 
         //coolTime = 0.25f;
         rend = this.GetComponent<Renderer>();
@@ -56,7 +52,7 @@ public class ColorChange : MonoBehaviour
             {
                 rend.sharedMaterial = _TriggerColor;
                 //StartCoroutine(RePosition(collision.gameObject));
-                playerRef.RePosition();
+                gameManager.playerRef.RePosition();
             }
             else
             {
